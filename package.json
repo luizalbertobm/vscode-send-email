@@ -2,7 +2,7 @@
   "name": "bee-send-email",
   "displayName": "Send Email",
   "description": "Send plain-text emails from VS Code via Gmail SMTP \u2014 compose in the sidebar or command palette, no browser needed.",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "publisher": "beecoders",
   "author": {
     "name": "Luiz Alberto B. Mesquita",
@@ -20,7 +20,7 @@
     "url": "https://github.com/luizalbertobm/vscode-send-email/issues"
   },
   "galleryBanner": {
-    "color": "#1e1e2e",
+    "color": "#6B1C8F",
     "theme": "dark"
   },
   "keywords": [
