@@ -1,0 +1,17 @@
+# Exclude source and build tooling — only ship compiled output
+.vscode/**
+src/**
+out/**
+node_modules/**
+tsconfig.json
+esbuild.config.js
+package-lock.json
+**/*.map
+
+# Keep these (explicitly — vsce includes them by default but being explicit is safe)
+!README.md
+!CHANGELOG.md
+!LICENSE
+!images/**
+!media/**
+!dist/extension.js

@@ -1,0 +1,118 @@
+{
+  "name": "bee-send-email",
+  "displayName": "Send Email",
+  "description": "Send plain-text emails from VS Code via Gmail SMTP — compose in the sidebar or command palette, no browser needed.",
+  "version": "0.1.0",
+  "publisher": "beecoders",
+  "author": {
+    "name": "Luiz Alberto B. Mesquita",
+    "email": "luizalbertobm@gmail.com",
+    "url": "https://github.com/luizalbertobm"
+  },
+  "license": "MIT",
+  "icon": "images/icon.png",
+  "homepage": "https://www.beecoders.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/beecoders/vscode-sendmail.git"
+  },
+  "bugs": {
+    "url": "https://github.com/beecoders/vscode-sendmail/issues"
+  },
+  "galleryBanner": {
+    "color": "#1e1e2e",
+    "theme": "dark"
+  },
+  "keywords": [
+    "email",
+    "gmail",
+    "smtp",
+    "send email",
+    "mail",
+    "compose",
+    "productivity"
+  ],
+  "categories": [
+    "Other"
+  ],
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "sendEmail",
+          "title": "Send Email",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "sendEmail": [
+        {
+          "id": "sendEmail.sidebarForm",
+          "name": "Send Email",
+          "type": "webview"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "sendEmail.openForm",
+        "title": "Send Email",
+        "category": "Email"
+      }
+    ],
+    "configuration": {
+      "title": "Send Email",
+      "properties": {
+        "sendEmail.smtpHost": {
+          "type": "string",
+          "default": "smtp.gmail.com",
+          "description": "SMTP server hostname"
+        },
+        "sendEmail.smtpPort": {
+          "type": "number",
+          "default": 465,
+          "description": "SMTP server port (465 for SSL)"
+        },
+        "sendEmail.smtpUser": {
+          "type": "string",
+          "default": "",
+          "description": "Gmail address used to send emails"
+        },
+        "sendEmail.smtpPassword": {
+          "type": "string",
+          "default": "",
+          "secret": true,
+          "description": "Gmail app password — generate one at https://myaccount.google.com/security under App passwords (requires 2-Step Verification)"
+        },
+        "sendEmail.fromAddress": {
+          "type": "string",
+          "default": "",
+          "description": "Display name or address shown in the From field (defaults to smtpUser if empty)"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "node esbuild.config.js",
+    "watch": "node esbuild.config.js --watch",
+    "package": "npm run build && vsce package",
+    "publish": "npm run build && vsce publish"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/nodemailer": "^6.4.0",
+    "@types/vscode": "^1.80.0",
+    "@vscode/vsce": "^2.32.0",
+    "esbuild": "^0.20.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "nodemailer": "^6.9.0"
+  }
+}
