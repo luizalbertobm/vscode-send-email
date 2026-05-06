@@ -1,0 +1,14 @@
+{
+  "extension.displayName": "Envoyer un e-mail",
+  "extension.description": "Envoyez des e-mails en texte brut depuis VS Code via Gmail SMTP — composez depuis la barre latérale ou la palette de commandes, sans quitter l'éditeur.",
+  "activitybar.title": "Envoyer un e-mail",
+  "view.name": "Envoyer un e-mail",
+  "command.sendEmail.title": "Envoyer un e-mail",
+  "command.sendEmail.category": "E-mail",
+  "config.title": "Envoyer un e-mail",
+  "config.smtpHost.description": "Nom d'hôte du serveur SMTP",
+  "config.smtpPort.description": "Port du serveur SMTP (465 pour SSL)",
+  "config.smtpUser.description": "Adresse Gmail utilisée pour envoyer des e-mails",
+  "config.smtpPassword.description": "Mot de passe d'application Gmail — générez-en un sur https://myaccount.google.com/security sous Mots de passe des applications (nécessite la validation en deux étapes)",
+  "config.fromAddress.description": "Nom ou adresse affiché dans le champ De (utilise smtpUser si vide)"
+}

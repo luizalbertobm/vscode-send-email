@@ -17,7 +17,9 @@ export async function sendEmail(options: SendEmailOptions): Promise<void> {
 
   if (!user || !password) {
     throw new Error(
-      'Gmail credentials not configured. Open Settings and fill in sendEmail.smtpUser and sendEmail.smtpPassword.'
+      vscode.l10n.t(
+        'Gmail credentials not configured. Open Settings and fill in sendEmail.smtpUser and sendEmail.smtpPassword.'
+      )
     );
   }
 

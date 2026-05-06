@@ -1,14 +1,33 @@
 /**
+ * Translated strings injected into the webview HTML at render time.
+ * Populated from the extension host using vscode.l10n.t().
+ */
+export interface WebviewLabels {
+  language: string;
+  title: string;
+  labelTo: string;
+  placeholderTo: string;
+  labelSubject: string;
+  placeholderSubject: string;
+  labelMessage: string;
+  placeholderMessage: string;
+  btnSend: string;
+  btnSending: string;
+  validationFillAll: string;
+  successMessage: string;
+}
+
+/**
  * Returns the shared HTML for the email compose form.
  * Used by both the editor WebviewPanel and the sidebar WebviewView.
  */
-export function getFormHtml(): string {
+export function getFormHtml(labels: WebviewLabels): string {
   return /* html */ `<!DOCTYPE html>
-<html lang="en">
+<html lang="${labels.language}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Send Email</title>
+  <title>${labels.title}</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -104,29 +123,35 @@ export function getFormHtml(): string {
   </style>
 </head>
 <body>
-  <h2>✉️ Send Email</h2>
+  <h2>✉️ ${labels.title}</h2>
 
   <div class="field">
-    <label for="to">To</label>
-    <input id="to" type="email" placeholder="recipient@example.com" />
+    <label for="to">${labels.labelTo}</label>
+    <input id="to" type="email" placeholder="${labels.placeholderTo}" />
   </div>
 
   <div class="field">
-    <label for="subject">Subject</label>
-    <input id="subject" type="text" placeholder="Email subject" />
+    <label for="subject">${labels.labelSubject}</label>
+    <input id="subject" type="text" placeholder="${labels.placeholderSubject}" />
   </div>
 
   <div class="field">
-    <label for="body">Message</label>
-    <textarea id="body" placeholder="Write your message here..."></textarea>
+    <label for="body">${labels.labelMessage}</label>
+    <textarea id="body" placeholder="${labels.placeholderMessage}"></textarea>
   </div>
 
-  <button id="sendBtn" onclick="sendEmail()">Send</button>
+  <button id="sendBtn" onclick="sendEmail()">${labels.btnSend}</button>
 
   <div id="status"></div>
 
   <script>
     const vscode = acquireVsCodeApi();
+    const i18n = {
+      btnSend: ${JSON.stringify(labels.btnSend)},
+      btnSending: ${JSON.stringify(labels.btnSending)},
+      validationFillAll: ${JSON.stringify(labels.validationFillAll)},
+      successMessage: ${JSON.stringify(labels.successMessage)},
+    };
 
     function sendEmail() {
       const to = document.getElementById('to').value.trim();
@@ -134,13 +159,13 @@ export function getFormHtml(): string {
       const body = document.getElementById('body').value.trim();
 
       if (!to || !subject || !body) {
-        showStatus('Please fill in all fields.', false);
+        showStatus(i18n.validationFillAll, false);
         return;
       }
 
       const btn = document.getElementById('sendBtn');
       btn.disabled = true;
-      btn.textContent = 'Sending…';
+      btn.textContent = i18n.btnSending;
       hideStatus();
 
       vscode.postMessage({ command: 'send', to, subject, body });
@@ -150,11 +175,11 @@ export function getFormHtml(): string {
       const msg = event.data;
       const btn = document.getElementById('sendBtn');
       btn.disabled = false;
-      btn.textContent = 'Send';
+      btn.textContent = i18n.btnSend;
 
       if (msg.command === 'result') {
         if (msg.ok) {
-          showStatus('✅ Email sent successfully!', true);
+          showStatus(i18n.successMessage, true);
           document.getElementById('to').value = '';
           document.getElementById('subject').value = '';
           document.getElementById('body').value = '';

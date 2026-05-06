@@ -1,8 +1,8 @@
 {
   "name": "bee-send-email",
-  "displayName": "Send Email",
-  "description": "Send plain-text emails from VS Code via Gmail SMTP \u2014 compose in the sidebar or command palette, no browser needed.",
-  "version": "1.0.0",
+  "displayName": "%extension.displayName%",
+  "description": "%extension.description%",
+  "version": "1.1.0",
   "publisher": "beecoders",
   "author": {
     "name": "Luiz Alberto B. Mesquita",
@@ -39,13 +39,14 @@
     "vscode": "^1.80.0"
   },
   "activationEvents": [],
+  "l10n": "./l10n",
   "main": "./dist/extension.js",
   "contributes": {
     "viewsContainers": {
       "activitybar": [
         {
           "id": "sendEmail",
-          "title": "Send Email",
+          "title": "%activitybar.title%",
           "icon": "media/icon.svg"
         }
       ]
@@ -54,7 +55,7 @@
       "sendEmail": [
         {
           "id": "sendEmail.sidebarForm",
-          "name": "Send Email",
+          "name": "%view.name%",
           "type": "webview"
         }
       ]
@@ -62,38 +63,38 @@
     "commands": [
       {
         "command": "sendEmail.openForm",
-        "title": "Send Email",
-        "category": "Email"
+        "title": "%command.sendEmail.title%",
+        "category": "%command.sendEmail.category%"
       }
     ],
     "configuration": {
-      "title": "Send Email",
+      "title": "%config.title%",
       "properties": {
         "sendEmail.smtpHost": {
           "type": "string",
           "default": "smtp.gmail.com",
-          "description": "SMTP server hostname"
+          "description": "%config.smtpHost.description%"
         },
         "sendEmail.smtpPort": {
           "type": "number",
           "default": 465,
-          "description": "SMTP server port (465 for SSL)"
+          "description": "%config.smtpPort.description%"
         },
         "sendEmail.smtpUser": {
           "type": "string",
           "default": "",
-          "description": "Gmail address used to send emails"
+          "description": "%config.smtpUser.description%"
         },
         "sendEmail.smtpPassword": {
           "type": "string",
           "default": "",
           "secret": true,
-          "description": "Gmail app password \u2014 generate one at https://myaccount.google.com/security under App passwords (requires 2-Step Verification)"
+          "description": "%config.smtpPassword.description%"
         },
         "sendEmail.fromAddress": {
           "type": "string",
           "default": "",
-          "description": "Display name or address shown in the From field (defaults to smtpUser if empty)"
+          "description": "%config.fromAddress.description%"
         }
       }
     }
@@ -101,6 +102,7 @@
   "scripts": {
     "build": "node esbuild.config.js",
     "watch": "node esbuild.config.js --watch",
+    "l10n:export": "npx @vscode/l10n-dev export --outDir ./l10n ./src",
     "package": "npm run build && vsce package",
     "publish": "npm run build && vsce publish"
   },
@@ -108,6 +110,7 @@
     "@types/node": "^20.0.0",
     "@types/nodemailer": "^6.4.0",
     "@types/vscode": "^1.80.0",
+    "@vscode/l10n-dev": "^0.0.35",
     "@vscode/vsce": "^2.32.0",
     "esbuild": "^0.20.0",
     "typescript": "^5.0.0"

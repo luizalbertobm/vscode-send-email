@@ -1,0 +1,14 @@
+{
+  "extension.displayName": "Send Email",
+  "extension.description": "Send plain-text emails from VS Code via Gmail SMTP — compose in the sidebar or command palette, no browser needed.",
+  "activitybar.title": "Send Email",
+  "view.name": "Send Email",
+  "command.sendEmail.title": "Send Email",
+  "command.sendEmail.category": "Email",
+  "config.title": "Send Email",
+  "config.smtpHost.description": "SMTP server hostname",
+  "config.smtpPort.description": "SMTP server port (465 for SSL)",
+  "config.smtpUser.description": "Gmail address used to send emails",
+  "config.smtpPassword.description": "Gmail app password — generate one at https://myaccount.google.com/security under App passwords (requires 2-Step Verification)",
+  "config.fromAddress.description": "Display name or address shown in the From field (defaults to smtpUser if empty)"
+}

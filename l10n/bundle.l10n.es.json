@@ -1,0 +1,16 @@
+{
+  "Gmail credentials not configured. Open Settings and fill in sendEmail.smtpUser and sendEmail.smtpPassword.": "Credenciales de Gmail no configuradas. Abra Configuración y complete sendEmail.smtpUser y sendEmail.smtpPassword.",
+  "Email sent to {0}": "Correo enviado a {0}",
+  "Failed to send email: {0}": "Error al enviar el correo: {0}",
+  "Send Email": "Enviar correo",
+  "To": "Para",
+  "recipient@example.com": "destinatario@ejemplo.com",
+  "Subject": "Asunto",
+  "Email subject": "Asunto del correo",
+  "Message": "Mensaje",
+  "Write your message here...": "Escribe tu mensaje aquí...",
+  "Send": "Enviar",
+  "Sending\u2026": "Enviando\u2026",
+  "Please fill in all fields.": "Por favor, completa todos los campos.",
+  "\u2705 Email sent successfully!": "\u2705 ¡Correo enviado con éxito!"
+}

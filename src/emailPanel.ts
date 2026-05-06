@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { sendEmail } from './emailSender';
 import { getFormHtml } from './emailFormHtml';
+import { getWebviewLabels } from './i18n';
 
 export class EmailPanel {
   public static readonly viewType = 'sendEmail.form';
@@ -20,12 +21,12 @@ export class EmailPanel {
   private constructor(extensionUri: vscode.Uri) {
     this.panel = vscode.window.createWebviewPanel(
       EmailPanel.viewType,
-      'Send Email',
+      vscode.l10n.t('Send Email'),
       vscode.ViewColumn.One,
       { enableScripts: true }
     );
 
-    this.panel.webview.html = getFormHtml();
+    this.panel.webview.html = getFormHtml(getWebviewLabels());
 
     this.panel.webview.onDidReceiveMessage(
       async (message) => {
@@ -37,11 +38,11 @@ export class EmailPanel {
               body: message.body,
             });
             this.panel.webview.postMessage({ command: 'result', ok: true });
-            vscode.window.showInformationMessage(`Email sent to ${message.to}`);
+            vscode.window.showInformationMessage(vscode.l10n.t('Email sent to {0}', message.to));
           } catch (err: unknown) {
             const errorMessage = err instanceof Error ? err.message : String(err);
             this.panel.webview.postMessage({ command: 'result', ok: false, error: errorMessage });
-            vscode.window.showErrorMessage(`Failed to send email: ${errorMessage}`);
+            vscode.window.showErrorMessage(vscode.l10n.t('Failed to send email: {0}', errorMessage));
           }
         }
       },

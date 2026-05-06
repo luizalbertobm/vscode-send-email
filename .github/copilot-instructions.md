@@ -31,7 +31,23 @@ Email sending is handled in `emailSender.ts` via **nodemailer**, reading SMTP co
 
 **Bundle**: esbuild bundles `src/extension.ts` → `dist/extension.js` (CJS, Node platform). The `vscode` module is externalized. `tsconfig.json` is used for IDE tooling and type-checking only — the `outDir: "out"` in tsconfig is unused; esbuild controls the output.
 
-## Key Conventions
+## Internationalization (i18n)
+
+VS Code's native l10n system is used. No extra runtime packages.
+
+**Two separate mechanisms:**
+- **`package.json` static strings** — `%key%` placeholders resolved at startup from `package.nls.json` (en default) and `package.nls.{locale}.json` (e.g., `package.nls.pt-br.json`).
+- **TypeScript runtime strings** — `vscode.l10n.t('...')` API; translations live in `l10n/bundle.l10n.{locale}.json`. The `"l10n": "./l10n"` field in `package.json` declares this path.
+- **Webview HTML strings** — `getFormHtml(labels)` accepts a `WebviewLabels` object. Call `getWebviewLabels()` from `src/i18n.ts` (which uses `vscode.l10n.t()`) to populate it before rendering.
+
+**Supported locales:** en (default), pt-BR, fr, es.
+
+**To add a new locale:**
+1. Add `package.nls.{locale}.json` with all keys from `package.nls.json`
+2. Add `l10n/bundle.l10n.{locale}.json` with all keys from `l10n/bundle.l10n.json`
+
+Run `npm run l10n:export` to regenerate `l10n/bundle.l10n.json` after adding new `vscode.l10n.t()` calls.
+
 
 - All VS Code settings live under the `sendEmail` namespace (`sendEmail.smtpHost`, `sendEmail.smtpUser`, etc.).
 - The webview HTML is a single inline string function in `emailFormHtml.ts` — no separate HTML files. Styling uses VS Code CSS variables (`--vscode-*`) throughout for theme compatibility.
