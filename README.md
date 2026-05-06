@@ -3,7 +3,7 @@
 > Compose and send plain-text emails without leaving VS Code.
 
 [![GitHub Repo stars](https://img.shields.io/github/stars/luizalbertobm/vscode-send-email?style=plastic&logo=github)](https://github.com/luizalbertobm/vscode-send-email/stargazers)
-[![VS Marketplace](https://img.shields.io/badge/vscode-send_email?style=plastic&label=Marketplace&logo=metrodeparis)](https://marketplace.visualstudio.com/items?itemName=beecoders.send-email)
+[![VS Marketplace](https://img.shields.io/badge/vscode-send_email?style=plastic&label=Marketplace&logo=metrodeparis)](https://marketplace.visualstudio.com/items?itemName=beecoders.bee-send-email)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=plastic)](LICENSE)
 
 
