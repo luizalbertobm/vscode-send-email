@@ -26,7 +26,7 @@
 
 ### How to generate a Gmail App Password
 
-1. Go to [myaccount.google.com/security](https://myaccount.google.com/security)
+1. Go to [myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords)
 2. Enable **2-Step Verification** if not already on
 3. Open **App passwords**
 4. Create a new app password (e.g. name it `VS Code`)

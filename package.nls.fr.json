@@ -9,6 +9,6 @@
   "config.smtpHost.description": "Nom d'hôte du serveur SMTP",
   "config.smtpPort.description": "Port du serveur SMTP (465 pour SSL)",
   "config.smtpUser.description": "Adresse Gmail utilisée pour envoyer des e-mails",
-  "config.smtpPassword.description": "Mot de passe d'application Gmail — générez-en un sur https://myaccount.google.com/security sous Mots de passe des applications (nécessite la validation en deux étapes)",
+  "config.smtpPassword.description": "Mot de passe d'application Gmail — générez-en un sur https://myaccount.google.com/apppasswords sous Mots de passe des applications (nécessite la validation en deux étapes)",
   "config.fromAddress.description": "Nom ou adresse affiché dans le champ De (utilise smtpUser si vide)"
 }
