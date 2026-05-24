@@ -15,5 +15,6 @@
   "command.refreshInbox.title": "Actualiser la boîte de réception",
   "command.openInboxEmail.title": "Ouvrir l'e-mail",
   "config.imapHost.description": "Nom d'hôte du serveur IMAP (ex : imap.gmail.com)",
-  "config.imapPort.description": "Port du serveur IMAP (par défaut : 993 pour SSL)"
+  "config.imapPort.description": "Port du serveur IMAP (par défaut : 993 pour SSL)",
+  "command.loadMoreEmails.title": "Charger plus d'e-mails"
 }

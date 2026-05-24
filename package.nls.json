@@ -15,5 +15,6 @@
   "command.refreshInbox.title": "Refresh Inbox",
   "command.openInboxEmail.title": "Open Email",
   "config.imapHost.description": "IMAP server hostname (e.g. imap.gmail.com)",
-  "config.imapPort.description": "IMAP server port (default: 993 for SSL)"
+  "config.imapPort.description": "IMAP server port (default: 993 for SSL)",
+  "command.loadMoreEmails.title": "Load More Emails"
 }

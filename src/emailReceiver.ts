@@ -12,7 +12,12 @@ export interface InboxEmail {
   textBody: string | null;
 }
 
-export async function fetchRecentEmails(count: number): Promise<InboxEmail[]> {
+export interface FetchEmailPageResult {
+  emails: InboxEmail[];
+  hasMore: boolean;
+}
+
+export async function fetchEmailPage(offset: number, count: number): Promise<FetchEmailPageResult> {
   const cfg = vscode.workspace.getConfiguration('sendEmail');
   const imapHost = cfg.get<string>('imapHost', 'imap.gmail.com');
   const imapPort = cfg.get<number>('imapPort', 993);
@@ -35,6 +40,7 @@ export async function fetchRecentEmails(count: number): Promise<InboxEmail[]> {
   });
 
   const emails: InboxEmail[] = [];
+  let hasMore = false;
 
   try {
     await client.connect();
@@ -43,13 +49,18 @@ export async function fetchRecentEmails(count: number): Promise<InboxEmail[]> {
     try {
       const mailbox = client.mailbox;
       if (!mailbox || mailbox.exists === 0) {
-        return [];
+        return { emails: [], hasMore: false };
       }
 
       const total = mailbox.exists;
-      const start = Math.max(1, total - count + 1);
+      // end: newest message in this page (skip `offset` most recent)
+      const end = Math.max(1, total - offset);
+      // start: oldest message in this page
+      const start = Math.max(1, end - count + 1);
+      // There are older messages not yet loaded if start > 1
+      hasMore = start > 1;
 
-      for await (const msg of client.fetch(`${start}:*`, { source: true })) {
+      for await (const msg of client.fetch(`${start}:${end}`, { source: true })) {
         const parsed = await simpleParser(msg.source as Buffer);
 
         const toAddresses = Array.isArray(parsed.to)
@@ -73,5 +84,5 @@ export async function fetchRecentEmails(count: number): Promise<InboxEmail[]> {
     await client.logout().catch(() => {});
   }
 
-  return emails.reverse();
+  return { emails: emails.reverse(), hasMore };
 }

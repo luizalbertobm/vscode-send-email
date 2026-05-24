@@ -17,5 +17,6 @@
   "No messages found.": "No messages found.",
   "(no subject)": "(no subject)",
   "IMAP host is not configured.": "IMAP host is not configured.",
-  "SMTP credentials are required to fetch emails.": "SMTP credentials are required to fetch emails."
+  "SMTP credentials are required to fetch emails.": "SMTP credentials are required to fetch emails.",
+  "Load more emails...": "Load more emails..."
 }

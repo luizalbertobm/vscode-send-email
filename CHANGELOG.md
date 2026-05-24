@@ -5,6 +5,11 @@ All notable changes to **Send Email** will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] — 2026-05-24
+
+### Added
+- **Paginated inbox** — the inbox now loads the 20 most recent emails initially. A **Load more emails…** item appears at the bottom of the list whenever older messages are available. Clicking it fetches the next 20 emails and appends them to the list, keeping all previously loaded emails visible.
+
 ## [1.2.4] — 2026-05-24
 
 ### Changed

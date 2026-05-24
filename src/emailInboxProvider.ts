@@ -1,5 +1,7 @@
 import * as vscode from 'vscode';
-import { fetchRecentEmails, InboxEmail } from './emailReceiver';
+import { fetchEmailPage, InboxEmail } from './emailReceiver';
+
+const PAGE_SIZE = 20;
 
 class InboxTreeItem extends vscode.TreeItem {
   constructor(
@@ -26,19 +28,46 @@ export class EmailInboxProvider implements vscode.TreeDataProvider<InboxTreeItem
   readonly onDidChangeTreeData = this._onDidChangeTreeData.event;
 
   private emails: InboxEmail[] = [];
-  private status: 'idle' | 'loading' | 'error' = 'idle';
+  private offset = 0;
+  private hasMore = false;
+  private status: 'idle' | 'loading' | 'loadingMore' | 'error' = 'idle';
   private errorMessage = '';
 
   async refresh(): Promise<void> {
+    this.emails = [];
+    this.offset = 0;
+    this.hasMore = false;
     this.status = 'loading';
     this._onDidChangeTreeData.fire();
     try {
-      this.emails = await fetchRecentEmails(20);
+      const result = await fetchEmailPage(0, PAGE_SIZE);
+      this.emails = result.emails;
+      this.hasMore = result.hasMore;
+      this.offset = PAGE_SIZE;
       this.status = 'idle';
     } catch (err) {
       this.status = 'error';
       this.errorMessage = err instanceof Error ? err.message : String(err);
       this.emails = [];
+    }
+    this._onDidChangeTreeData.fire();
+  }
+
+  async loadMore(): Promise<void> {
+    if (this.status === 'loading' || this.status === 'loadingMore' || !this.hasMore) {
+      return;
+    }
+    this.status = 'loadingMore';
+    this._onDidChangeTreeData.fire();
+    try {
+      const result = await fetchEmailPage(this.offset, PAGE_SIZE);
+      this.emails = [...this.emails, ...result.emails];
+      this.hasMore = result.hasMore;
+      this.offset += PAGE_SIZE;
+      this.status = 'idle';
+    } catch (err) {
+      this.status = 'error';
+      this.errorMessage = err instanceof Error ? err.message : String(err);
     }
     this._onDidChangeTreeData.fire();
   }
@@ -73,7 +102,7 @@ export class EmailInboxProvider implements vscode.TreeDataProvider<InboxTreeItem
       ];
     }
 
-    return this.emails.map((email) => {
+    const items = this.emails.map((email) => {
       const dateLabel = email.date
         ? new Date(email.date).toLocaleString()
         : '';
@@ -89,5 +118,22 @@ export class EmailInboxProvider implements vscode.TreeDataProvider<InboxTreeItem
         },
       });
     });
+
+    if (this.hasMore) {
+      const isLoadingMore = this.status === 'loadingMore';
+      items.push(
+        new InboxTreeItem(
+          isLoadingMore ? vscode.l10n.t('Loading...') : vscode.l10n.t('Load more emails...'),
+          {
+            icon: new vscode.ThemeIcon(isLoadingMore ? 'loading~spin' : 'chevron-down'),
+            command: isLoadingMore
+              ? undefined
+              : { command: 'sendEmail.loadMoreEmails', title: '' },
+          }
+        )
+      );
+    }
+
+    return items;
   }
 }

@@ -42,6 +42,13 @@ export function activate(context: vscode.ExtensionContext): void {
       EmailViewerPanel.open(email, context.extensionUri);
     })
   );
+
+  // Load next page of emails
+  context.subscriptions.push(
+    vscode.commands.registerCommand('sendEmail.loadMoreEmails', () => {
+      inboxProvider.loadMore();
+    })
+  );
 }
 
 export function deactivate(): void {}
