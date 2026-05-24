@@ -51,7 +51,6 @@ const XSS_OPTIONS: IFilterXSSOptions = {
     ul: ['style', 'class'],
   },
   onTagAttr(tag, name, value) {
-    // Only allow safe URL schemes for href
     if (tag === 'a' && name === 'href') {
       return /^(https?:|mailto:)/i.test(value.trim()) ? undefined : '';
     }
@@ -65,6 +64,20 @@ const XSS_OPTIONS: IFilterXSSOptions = {
   stripIgnoreTagBody: ['script', 'style', 'noscript', 'iframe', 'object', 'embed'],
 };
 
+// Same as XSS_OPTIONS but allows https: src on images
+const XSS_OPTIONS_WITH_IMAGES: IFilterXSSOptions = {
+  ...XSS_OPTIONS,
+  onTagAttr(tag, name, value) {
+    if (tag === 'a' && name === 'href') {
+      return /^(https?:|mailto:)/i.test(value.trim()) ? undefined : '';
+    }
+    if (tag === 'img' && name === 'src') {
+      return /^(https?:|data:)/i.test(value.trim()) ? undefined : '';
+    }
+    return undefined;
+  },
+};
+
 export class EmailViewerPanel {
   static open(email: InboxEmail, _extensionUri: vscode.Uri): void {
     const title = email.subject || vscode.l10n.t('(no subject)');
@@ -72,17 +85,31 @@ export class EmailViewerPanel {
       'sendEmail.emailViewer',
       title,
       vscode.ViewColumn.Beside,
-      { enableScripts: false, retainContextWhenHidden: false }
+      { enableScripts: true, retainContextWhenHidden: false }
     );
-    panel.webview.html = buildViewerHtml(email, panel.webview);
+
+    panel.webview.html = buildViewerHtml(email, panel.webview, false);
+
+    panel.webview.onDidReceiveMessage((msg) => {
+      if (msg.command === 'loadImages') {
+        panel.webview.html = buildViewerHtml(email, panel.webview, true);
+      }
+    });
   }
 }
 
-function buildViewerHtml(email: InboxEmail, webview: vscode.Webview): string {
-  const csp = `default-src 'none'; style-src 'unsafe-inline'; img-src data:;`;
+function hasExternalImages(html: string): boolean {
+  return /<img[^>]+src\s*=\s*["']https?:/i.test(html);
+}
+
+function buildViewerHtml(email: InboxEmail, _webview: vscode.Webview, imagesEnabled: boolean): string {
+  const imgSrc = imagesEnabled ? `img-src https: data:;` : `img-src data:;`;
+  const csp = `default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; ${imgSrc}`;
+
+  const xssOptions = imagesEnabled ? XSS_OPTIONS_WITH_IMAGES : XSS_OPTIONS;
 
   const bodyHtml = email.htmlBody
-    ? filterXSS(email.htmlBody, XSS_OPTIONS)
+    ? filterXSS(email.htmlBody, xssOptions)
     : email.textBody
     ? `<pre style="white-space: pre-wrap; word-break: break-word; font-family: var(--vscode-editor-font-family, monospace);">${escapeHtml(email.textBody)}</pre>`
     : `<em style="color: var(--vscode-descriptionForeground);">(empty)</em>`;
@@ -91,6 +118,8 @@ function buildViewerHtml(email: InboxEmail, webview: vscode.Webview): string {
     ? new Date(email.date).toLocaleString()
     : '';
 
+  const showBanner = !imagesEnabled && email.htmlBody !== null && hasExternalImages(email.htmlBody);
+
   function row(label: string, value: string): string {
     if (!value) { return ''; }
     return `<tr>
@@ -98,6 +127,27 @@ function buildViewerHtml(email: InboxEmail, webview: vscode.Webview): string {
       <td style="padding:4px 0; word-break:break-word;">${escapeHtml(value)}</td>
     </tr>`;
   }
+
+  const banner = showBanner ? `
+  <div id="img-banner" style="
+    display:flex; align-items:center; gap:12px;
+    padding:8px 20px;
+    background:var(--vscode-editorWidget-background, #252526);
+    border-bottom:1px solid var(--vscode-panel-border, #444);
+    font-size:var(--vscode-font-size,13px);
+    color:var(--vscode-foreground);
+  ">
+    <span style="flex:1;">⚠️ Images are blocked to protect your privacy.</span>
+    <button onclick="(function(){const vsc=acquireVsCodeApi();vsc.postMessage({command:'loadImages'});})()" style="
+      cursor:pointer;
+      padding:4px 12px;
+      background:var(--vscode-button-background);
+      color:var(--vscode-button-foreground);
+      border:none;
+      border-radius:2px;
+      font-size:var(--vscode-font-size,13px);
+    ">Load Images</button>
+  </div>` : '';
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -127,7 +177,6 @@ function buildViewerHtml(email: InboxEmail, webview: vscode.Webview): string {
       padding: 16px 20px;
       overflow-x: auto;
     }
-    /* Scope email body styles */
     .email-body a {
       color: var(--vscode-textLink-foreground);
     }
@@ -138,6 +187,7 @@ function buildViewerHtml(email: InboxEmail, webview: vscode.Webview): string {
   </style>
 </head>
 <body>
+  ${banner}
   <div class="header">
     <table>
       ${row('From', email.from)}
@@ -161,3 +211,4 @@ function escapeHtml(text: string): string {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
 }
+

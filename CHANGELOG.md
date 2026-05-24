@@ -5,6 +5,14 @@ All notable changes to **Send Email** will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.3] — 2026-05-24
+
+### Added
+- **Load Images button** in the email viewer — external images are blocked by default to protect privacy (no tracking pixels loaded without consent). A banner appears at the top of emails that contain remote images, with a **Load Images** button that reloads the email with images enabled.
+
+### Changed
+- Email viewer now uses `enableScripts: true` to support the Load Images button interaction
+
 ## [1.2.2] — 2026-05-24
 
 ### Fixed
