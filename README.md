@@ -1,6 +1,6 @@
 # VSCode Send Email
 
-> Compose and send plain-text emails without leaving VS Code.
+> Compose and send emails, and read your inbox — without leaving VS Code.
 
 [![GitHub Repo stars](https://img.shields.io/github/stars/luizalbertobm/vscode-send-email?style=plastic&logo=github)](https://github.com/luizalbertobm/vscode-send-email/stargazers)
 [![VS Marketplace](https://img.shields.io/badge/vscode-send_email?style=plastic&label=Marketplace&logo=metrodeparis)](https://marketplace.visualstudio.com/items?itemName=beecoders.bee-send-email)
@@ -13,8 +13,10 @@
 
 - **Activity Bar shortcut** — click the ✉️ envelope icon in the sidebar to open the email form instantly
 - **Command Palette** — run `Email: Send Email` from anywhere in VS Code
-- **Simple form** — fill in To, Subject and Message, then click Send
+- **Simple form** — fill in To, Subject, and Message, then click Send
 - **Gmail SMTP** — sends via your own Gmail account using an app password
+- **Inbox view** — see your 10 most recent emails directly in the Activity Bar sidebar
+- **Email reader** — click any message in the inbox to open and read it as an editor tab, with full header info and rendered HTML or plain-text body
 - **No browser, no switching context** — everything stays inside VS Code
 
 ---
@@ -53,6 +55,8 @@ Open **Settings** (`Ctrl+,`) and search for **Send Email**, or edit your `settin
 | `sendEmail.smtpUser` | — | Your Gmail address |
 | `sendEmail.smtpPassword` | — | Gmail app password |
 | `sendEmail.fromAddress` | — | From display name/address (defaults to smtpUser) |
+| `sendEmail.imapHost` | `imap.gmail.com` | IMAP server hostname (for inbox) |
+| `sendEmail.imapPort` | `993` | IMAP port (SSL) |
 
 ---
 
@@ -69,6 +73,12 @@ Open **Settings** (`Ctrl+,`) and search for **Send Email**, or edit your `settin
 2. Type `Send Email`
 3. Press Enter — the form opens as an editor panel
 
+### Reading your Inbox
+1. Click the **✉️ envelope icon** in the Activity Bar
+2. The **Inbox** panel lists your 10 most recent emails
+3. Click the **↻ Refresh** button in the panel toolbar to reload
+4. Click any email to open it in a viewer tab beside your current editor
+
 ---
 
 ## Extension Settings
@@ -81,8 +91,9 @@ All settings are under the `sendEmail` namespace and can be configured per-user 
 
 ## Known Limitations
 
-- Supports **plain-text** emails only (no HTML or attachments in this version)
-- Requires a Gmail account (other SMTP providers work if you update host/port settings)
+- Supports **plain-text** emails only when sending (no HTML or attachments)
+- Inbox fetches the **10 most recent messages** from the INBOX folder
+- Requires a Gmail account (other providers work if you update the SMTP/IMAP host and port settings)
 - The app password is stored in VS Code settings — use **User Settings** (not Workspace) to keep it off disk in shared projects
 
 ---
