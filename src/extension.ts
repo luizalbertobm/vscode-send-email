@@ -21,12 +21,10 @@ export function activate(context: vscode.ExtensionContext): void {
     })
   );
 
-  // Inbox tree view
-  const inboxProvider = new EmailInboxProvider();
+  // Inbox webview view (sidebar panel with 2-line email items)
+  const inboxProvider = new EmailInboxProvider(context.extensionUri);
   context.subscriptions.push(
-    vscode.window.createTreeView('sendEmail.inboxView', {
-      treeDataProvider: inboxProvider,
-    })
+    vscode.window.registerWebviewViewProvider('sendEmail.inboxView', inboxProvider)
   );
 
   // Refresh inbox command

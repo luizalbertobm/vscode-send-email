@@ -5,7 +5,13 @@ All notable changes to **Send Email** will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.3.0] — 2026-05-24
+## [1.3.1] — 2026-05-24
+
+### Changed
+- Inbox email list now displays **two lines per item**: the subject on the first line and the date · sender on the second line, making it easier to scan messages at a glance
+- Inbox panel is now rendered as a custom webview instead of a native tree view, enabling richer per-item layout
+
+
 
 ### Added
 - **Paginated inbox** — the inbox now loads the 20 most recent emails initially. A **Load more emails…** item appears at the bottom of the list whenever older messages are available. Clicking it fetches the next 20 emails and appends them to the list, keeping all previously loaded emails visible.
