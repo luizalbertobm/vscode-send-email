@@ -79,14 +79,26 @@ const XSS_OPTIONS_WITH_IMAGES: IFilterXSSOptions = {
 };
 
 export class EmailViewerPanel {
+  private static readonly _panels = new Map<number, vscode.WebviewPanel>();
+
   static open(email: InboxEmail, _extensionUri: vscode.Uri): void {
+    // Reuse existing tab for the same email
+    const existing = EmailViewerPanel._panels.get(email.uid);
+    if (existing) {
+      existing.reveal(vscode.ViewColumn.Active);
+      return;
+    }
+
     const title = email.subject || vscode.l10n.t('(no subject)');
     const panel = vscode.window.createWebviewPanel(
       'sendEmail.emailViewer',
       title,
-      vscode.ViewColumn.Beside,
+      vscode.ViewColumn.Active,
       { enableScripts: true, retainContextWhenHidden: false }
     );
+
+    EmailViewerPanel._panels.set(email.uid, panel);
+    panel.onDidDispose(() => EmailViewerPanel._panels.delete(email.uid));
 
     panel.webview.html = buildViewerHtml(email, panel.webview, false);
 
