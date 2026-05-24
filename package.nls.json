@@ -10,5 +10,10 @@
   "config.smtpPort.description": "SMTP server port (465 for SSL)",
   "config.smtpUser.description": "Gmail address used to send emails",
   "config.smtpPassword.description": "Gmail app password — generate one at https://myaccount.google.com/apppasswords under App passwords (requires 2-Step Verification)",
-  "config.fromAddress.description": "Display name or address shown in the From field (defaults to smtpUser if empty)"
+  "config.fromAddress.description": "Display name or address shown in the From field (defaults to smtpUser if empty)",
+  "view.inbox.name": "Inbox",
+  "command.refreshInbox.title": "Refresh Inbox",
+  "command.openInboxEmail.title": "Open Email",
+  "config.imapHost.description": "IMAP server hostname (e.g. imap.gmail.com)",
+  "config.imapPort.description": "IMAP server port (default: 993 for SSL)"
 }

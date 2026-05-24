@@ -10,5 +10,10 @@
   "config.smtpPort.description": "Port du serveur SMTP (465 pour SSL)",
   "config.smtpUser.description": "Adresse Gmail utilisée pour envoyer des e-mails",
   "config.smtpPassword.description": "Mot de passe d'application Gmail — générez-en un sur https://myaccount.google.com/apppasswords sous Mots de passe des applications (nécessite la validation en deux étapes)",
-  "config.fromAddress.description": "Nom ou adresse affiché dans le champ De (utilise smtpUser si vide)"
+  "config.fromAddress.description": "Nom ou adresse affiché dans le champ De (utilise smtpUser si vide)",
+  "view.inbox.name": "Boîte de réception",
+  "command.refreshInbox.title": "Actualiser la boîte de réception",
+  "command.openInboxEmail.title": "Ouvrir l'e-mail",
+  "config.imapHost.description": "Nom d'hôte du serveur IMAP (ex : imap.gmail.com)",
+  "config.imapPort.description": "Port du serveur IMAP (par défaut : 993 pour SSL)"
 }

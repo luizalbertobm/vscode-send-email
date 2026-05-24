@@ -5,6 +5,16 @@ All notable changes to **Send Email** will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] — 2026-05-24
+
+### Added
+- **Inbox view** in the Activity Bar sidebar — lists the 10 most recent emails fetched via IMAP
+- **Email viewer panel** — click any message in the inbox to open it as an editor tab beside the current file, with full header info (From, To, Date, Subject) and rendered HTML or plain-text body
+- **Refresh Inbox** button in the inbox view toolbar
+- New extension settings: `sendEmail.imapHost` (default: `imap.gmail.com`) and `sendEmail.imapPort` (default: `993`) to configure the IMAP connection
+- HTML email bodies are sanitized with `xss` before display to prevent script injection
+- All new strings translated to **pt-BR**, **fr**, and **es**
+
 ## [1.1.0] — 2026-05-06
 
 ### Added

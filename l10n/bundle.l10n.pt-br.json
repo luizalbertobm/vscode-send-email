@@ -10,7 +10,12 @@
   "Message": "Mensagem",
   "Write your message here...": "Escreva sua mensagem aqui...",
   "Send": "Enviar",
-  "Sending\u2026": "Enviando\u2026",
+  "Sending…": "Enviando…",
   "Please fill in all fields.": "Por favor, preencha todos os campos.",
-  "\u2705 Email sent successfully!": "\u2705 E-mail enviado com sucesso!"
+  "✅ Email sent successfully!": "✅ E-mail enviado com sucesso!",
+  "Loading...": "Carregando...",
+  "No messages found.": "Nenhuma mensagem encontrada.",
+  "(no subject)": "(sem assunto)",
+  "IMAP host is not configured.": "O servidor IMAP não está configurado.",
+  "SMTP credentials are required to fetch emails.": "As credenciais SMTP são necessárias para buscar os e-mails."
 }

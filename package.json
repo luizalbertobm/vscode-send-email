@@ -2,7 +2,7 @@
   "name": "bee-send-email",
   "displayName": "%extension.displayName%",
   "description": "%extension.description%",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "publisher": "beecoders",
   "author": {
     "name": "Luiz Alberto B. Mesquita",
@@ -57,6 +57,10 @@
           "id": "sendEmail.sidebarForm",
           "name": "%view.name%",
           "type": "webview"
+        },
+        {
+          "id": "sendEmail.inboxView",
+          "name": "%view.inbox.name%"
         }
       ]
     },
@@ -65,8 +69,33 @@
         "command": "sendEmail.openForm",
         "title": "%command.sendEmail.title%",
         "category": "%command.sendEmail.category%"
+      },
+      {
+        "command": "sendEmail.refreshInbox",
+        "title": "%command.refreshInbox.title%",
+        "icon": "$(refresh)",
+        "category": "%command.sendEmail.category%"
+      },
+      {
+        "command": "sendEmail.openInboxEmail",
+        "title": "%command.openInboxEmail.title%"
       }
     ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "sendEmail.refreshInbox",
+          "when": "view == sendEmail.inboxView",
+          "group": "navigation"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "sendEmail.openInboxEmail",
+          "when": "false"
+        }
+      ]
+    },
     "configuration": {
       "title": "%config.title%",
       "properties": {
@@ -95,6 +124,16 @@
           "type": "string",
           "default": "",
           "description": "%config.fromAddress.description%"
+        },
+        "sendEmail.imapHost": {
+          "type": "string",
+          "default": "imap.gmail.com",
+          "description": "%config.imapHost.description%"
+        },
+        "sendEmail.imapPort": {
+          "type": "number",
+          "default": 993,
+          "description": "%config.imapPort.description%"
         }
       }
     }
@@ -107,6 +146,7 @@
     "publish": "npm run build && vsce publish"
   },
   "devDependencies": {
+    "@types/mailparser": "^3.4.6",
     "@types/node": "^20.0.0",
     "@types/nodemailer": "^6.4.0",
     "@types/vscode": "^1.80.0",
@@ -116,6 +156,9 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
-    "nodemailer": "^6.9.0"
+    "imapflow": "^1.3.3",
+    "mailparser": "^3.9.8",
+    "nodemailer": "^6.9.0",
+    "xss": "^1.0.15"
   }
 }

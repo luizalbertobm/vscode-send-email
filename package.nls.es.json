@@ -10,5 +10,10 @@
   "config.smtpPort.description": "Puerto del servidor SMTP (465 para SSL)",
   "config.smtpUser.description": "Dirección de Gmail usada para enviar correos",
   "config.smtpPassword.description": "Contraseña de aplicación de Gmail — genere una en https://myaccount.google.com/apppasswords en Contraseñas de aplicaciones (requiere verificación en dos pasos)",
-  "config.fromAddress.description": "Nombre o dirección mostrado en el campo De (usa smtpUser si está vacío)"
+  "config.fromAddress.description": "Nombre o dirección mostrado en el campo De (usa smtpUser si está vacío)",
+  "view.inbox.name": "Bandeja de entrada",
+  "command.refreshInbox.title": "Actualizar bandeja de entrada",
+  "command.openInboxEmail.title": "Abrir correo",
+  "config.imapHost.description": "Nombre de host del servidor IMAP (p. ej. imap.gmail.com)",
+  "config.imapPort.description": "Puerto del servidor IMAP (por defecto: 993 para SSL)"
 }
