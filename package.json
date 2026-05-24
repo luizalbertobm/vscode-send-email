@@ -2,7 +2,7 @@
   "name": "bee-send-email",
   "displayName": "%extension.displayName%",
   "description": "%extension.description%",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "publisher": "beecoders",
   "author": {
     "name": "Luiz Alberto B. Mesquita",
@@ -101,7 +101,7 @@
       "properties": {
         "sendEmail.smtpHost": {
           "type": "string",
-          "default": "",
+          "default": "smtp.gmail.com",
           "description": "%config.smtpHost.description%"
         },
         "sendEmail.smtpPort": {
@@ -127,7 +127,7 @@
         },
         "sendEmail.imapHost": {
           "type": "string",
-          "default": "",
+          "default": "imap.gmail.com",
           "description": "%config.imapHost.description%"
         },
         "sendEmail.imapPort": {
