@@ -1,115 +1,131 @@
-# VSCode Send Email
+# Send Email for VS Code
 
-> Compose and send emails, and read your inbox — without leaving VS Code.
+> Compose, send, and read emails — without leaving your editor.
 
-[![GitHub Repo stars](https://img.shields.io/github/stars/luizalbertobm/vscode-send-email?style=plastic&logo=github)](https://github.com/luizalbertobm/vscode-send-email/stargazers)
-[![VS Marketplace](https://img.shields.io/badge/vscode-send_email?style=plastic&label=Marketplace&logo=metrodeparis)](https://marketplace.visualstudio.com/items?itemName=beecoders.bee-send-email)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=plastic)](LICENSE)
+[![VS Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/beecoders.bee-send-email?style=flat-square&label=Marketplace&logo=visualstudiocode)](https://marketplace.visualstudio.com/items?itemName=beecoders.bee-send-email)
+[![GitHub Stars](https://img.shields.io/github/stars/luizalbertobm/vscode-send-email?style=flat-square&logo=github)](https://github.com/luizalbertobm/vscode-send-email/stargazers)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 
+---
+
+## Overview
+
+**Send Email** brings your Gmail inbox and compose workflow directly into VS Code. Whether you need to fire off a quick message or check an incoming email, you can do it without switching to a browser or email client.
 
 ---
 
 ## Features
 
-- **Activity Bar shortcut** — click the ✉️ envelope icon in the sidebar to open the email form instantly
-- **Command Palette** — run `Email: Send Email` from anywhere in VS Code
-- **Simple form** — fill in To, Subject, and Message, then click Send
-- **Gmail SMTP** — sends via your own Gmail account using an app password
-- **Inbox view** — see your 10 most recent emails directly in the Activity Bar sidebar
-- **Email reader** — click any message in the inbox to open and read it as an editor tab, with full header info and rendered HTML or plain-text body
-- **No browser, no switching context** — everything stays inside VS Code
+| | |
+|---|---|
+| ✉️ **Compose from the sidebar** | Click the envelope icon in the Activity Bar to open the compose form in the sidebar panel |
+| ⌨️ **Compose from the Command Palette** | Run `Email: Send Email` to open the form as a full editor tab |
+| 📥 **Inbox panel** | Browse your recent emails in the Activity Bar — two-line items show subject, date, and sender at a glance |
+| 📄 **Email reader** | Click any message to open it as an editor tab with rendered HTML body and full headers |
+| 🖼️ **Privacy-first image loading** | External images are blocked by default; a **Load Images** button lets you opt in per message |
+| 📑 **Paginated inbox** | Loads 20 emails at a time with a **Load more emails…** entry to fetch older pages |
+| ♻️ **Tab reuse** | Clicking the same email twice reveals the existing tab instead of opening a duplicate |
+| 🌍 **Multilingual** | UI fully translated into English, Portuguese (pt-BR), Spanish, and French |
+| 🎨 **Theme-aware** | All UI surfaces use VS Code CSS variables and match your current colour theme |
 
 ---
 
 ## Requirements
 
-- A Gmail account with **2-Step Verification** enabled
-- A **Gmail App Password** (not your regular Gmail password)
+- A **Gmail account** with **2-Step Verification** enabled
+- A **Gmail App Password** — used instead of your regular password
 
-### How to generate a Gmail App Password
+> Other IMAP/SMTP providers work too — just update the host and port settings.
 
-1. Go to [myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords)
-2. Enable **2-Step Verification** if not already on
-3. Open **App passwords**
-4. Create a new app password (e.g. name it `VS Code`)
-5. Copy the 16-character password — you'll paste it into the extension settings
+### Generating a Gmail App Password
+
+1. Sign in to [myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords)
+2. Under **App passwords**, create a new entry (e.g. name it `VS Code`)
+3. Copy the generated 16-character password
 
 ---
 
 ## Setup
 
-Open **Settings** (`Ctrl+,`) and search for **Send Email**, or edit your `settings.json` directly:
+Open **Settings** (`Ctrl+,` / `Cmd+,`) and search for **Send Email**, or add the following to your `settings.json`:
 
-```json
+```jsonc
 {
   "sendEmail.smtpUser": "you@gmail.com",
-  "sendEmail.smtpPassword": "your-16-char-app-password",
-  "sendEmail.fromAddress": "Your Name <you@gmail.com>"
+  "sendEmail.smtpPassword": "xxxx xxxx xxxx xxxx",  // 16-char app password
+  "sendEmail.fromAddress": "Your Name <you@gmail.com>"  // optional
 }
 ```
 
+### All Settings
+
 | Setting | Default | Description |
-|---------|---------|-------------|
+|---|---|---|
 | `sendEmail.smtpHost` | `smtp.gmail.com` | SMTP server hostname |
 | `sendEmail.smtpPort` | `465` | SMTP port (SSL) |
-| `sendEmail.smtpUser` | — | Your Gmail address |
-| `sendEmail.smtpPassword` | — | Gmail app password |
-| `sendEmail.fromAddress` | — | From display name/address (defaults to smtpUser) |
-| `sendEmail.imapHost` | `imap.gmail.com` | IMAP server hostname (for inbox) |
+| `sendEmail.smtpUser` | *(required)* | Gmail address used to send emails |
+| `sendEmail.smtpPassword` | *(required)* | Gmail app password |
+| `sendEmail.fromAddress` | — | Display name / address shown in the From field (defaults to `smtpUser`) |
+| `sendEmail.imapHost` | `imap.gmail.com` | IMAP server hostname (used by the inbox) |
 | `sendEmail.imapPort` | `993` | IMAP port (SSL) |
+
+> 🔒 **Security:** `smtpPassword` is stored as a VS Code secret. Configure it in **User Settings** (not Workspace Settings) to keep it out of project files committed to source control.
 
 ---
 
 ## Usage
 
-### From the Activity Bar
-1. Click the **✉️ envelope icon** in the left Activity Bar
-2. The email form opens in the sidebar
-3. Fill in **To**, **Subject**, **Message**
+### Sending an Email
+
+**From the Activity Bar:**
+1. Click the ✉️ **envelope icon** in the left Activity Bar
+2. The compose form opens in the sidebar
+3. Fill in **To**, **Subject**, and **Message**
 4. Click **Send**
 
-### From the Command Palette
-1. Press `Ctrl+Shift+P`
-2. Type `Send Email`
-3. Press Enter — the form opens as an editor panel
+**From the Command Palette:**
+1. Press `Ctrl+Shift+P` (`Cmd+Shift+P` on macOS)
+2. Type `Send Email` and press Enter
+3. The compose form opens as an editor panel
 
-### Reading your Inbox
-1. Click the **✉️ envelope icon** in the Activity Bar
-2. The **Inbox** panel lists your 10 most recent emails
-3. Click the **↻ Refresh** button in the panel toolbar to reload
-4. Click any email to open it in a viewer tab beside your current editor
+### Reading Your Inbox
 
----
-
-## Extension Settings
-
-All settings are under the `sendEmail` namespace and can be configured per-user or per-workspace.
-
-> ⚠️ **Security note:** Use a Gmail **App Password**, not your main account password. App passwords are revocable independently. Avoid committing workspace `settings.json` files containing your password to source control.
+1. Click the ✉️ **envelope icon** in the Activity Bar to expand the panel
+2. Click the **↻ Refresh** button in the **Inbox** panel toolbar to load your emails
+3. Each item shows the **subject** on the first line and **date · sender** on the second line
+4. Click any email to open it in a reader tab in your active editor group
+5. If an email contains external images, a privacy banner will appear — click **Load Images** to display them
+6. Scroll to the bottom and click **Load more emails…** to fetch the next page of older messages
 
 ---
 
 ## Known Limitations
 
-- Supports **plain-text** emails only when sending (no HTML or attachments)
-- Inbox fetches the **10 most recent messages** from the INBOX folder
-- Requires a Gmail account (other providers work if you update the SMTP/IMAP host and port settings)
-- The app password is stored in VS Code settings — use **User Settings** (not Workspace) to keep it off disk in shared projects
+- **Send is plain-text only** — HTML composition and file attachments are not supported
+- **Gmail / Google Workspace** recommended — other providers require manual host and port configuration
+- The inbox reads from the **INBOX** folder only
 
 ---
 
 ## Release Notes
 
-See [CHANGELOG.md](CHANGELOG.md).
+See [CHANGELOG.md](CHANGELOG.md) for a full version history.
+
+---
+
+## Contributing
+
+Bug reports and feature requests are welcome on [GitHub Issues](https://github.com/luizalbertobm/vscode-send-email/issues).
 
 ---
 
 ## Author
 
-**[Bee Coders](https://www.beecoders.dev)** — Developed by Luiz Alberto B. Mesquita
+**[Bee Coders](https://www.beecoders.dev)** — Developed by [Luiz Alberto B. Mesquita](https://github.com/luizalbertobm)
 
 ---
 
 ## License
 
 [MIT](LICENSE)
+
