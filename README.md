@@ -50,12 +50,12 @@ Open **Settings** (`Ctrl+,`) and search for **Send Email**, or edit your `settin
 
 | Setting | Default | Description |
 |---------|---------|-------------|
-| `sendEmail.smtpHost` | `smtp.gmail.com` | SMTP server hostname |
+| `sendEmail.smtpHost` | *(empty — uses `smtp.gmail.com`)* | SMTP server hostname |
 | `sendEmail.smtpPort` | `465` | SMTP port (SSL) |
 | `sendEmail.smtpUser` | — | Your Gmail address |
 | `sendEmail.smtpPassword` | — | Gmail app password |
 | `sendEmail.fromAddress` | — | From display name/address (defaults to smtpUser) |
-| `sendEmail.imapHost` | `imap.gmail.com` | IMAP server hostname (for inbox) |
+| `sendEmail.imapHost` | *(empty — uses `imap.gmail.com`)* | IMAP server hostname (for inbox) |
 | `sendEmail.imapPort` | `993` | IMAP port (SSL) |
 
 ---

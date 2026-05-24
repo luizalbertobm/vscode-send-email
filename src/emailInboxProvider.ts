@@ -33,7 +33,7 @@ export class EmailInboxProvider implements vscode.TreeDataProvider<InboxTreeItem
     this.status = 'loading';
     this._onDidChangeTreeData.fire();
     try {
-      this.emails = await fetchRecentEmails(10);
+      this.emails = await fetchRecentEmails(20);
       this.status = 'idle';
     } catch (err) {
       this.status = 'error';

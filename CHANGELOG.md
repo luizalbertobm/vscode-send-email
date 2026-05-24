@@ -5,6 +5,14 @@ All notable changes to **Send Email** will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.1] — 2026-05-24
+
+### Fixed
+- `sendEmail.smtpHost` and `sendEmail.imapHost` settings now always persist to `settings.json` when changed in the UI. Previously, setting them to their default values (`smtp.gmail.com` / `imap.gmail.com`) was silently dropped by VS Code because the value matched the schema default. Defaults are now `""` and the descriptions document the fallback value used when left empty.
+
+### Changed
+- Inbox now fetches the **20** most recent emails (up from 10)
+
 ## [1.2.0] — 2026-05-24
 
 ### Added
